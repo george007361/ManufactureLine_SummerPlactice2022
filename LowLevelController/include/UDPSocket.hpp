@@ -3,12 +3,15 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <iostream>
+#include <netdb.h>
 #include <string.h>
 #include <string>
 #include <sys/socket.h>
 #include <unistd.h>
 
 using namespace std;
+
+int gport = 8888;
 
 class UDPSocket {
 private:
@@ -52,6 +55,14 @@ UDPSocket::UDPSocket(const string &ip, const int port) : addr(), sockfd(0) {
   addr.sin_family = AF_INET;
   addr.sin_port = htons(_port);
   addr.sin_addr.s_addr = inet_addr(_ip.c_str());
+
+  struct sockaddr_in my_addr;
+  my_addr.sin_family = AF_INET;
+  my_addr.sin_port = htons(++gport); // short, network byte order
+  my_addr.sin_addr.s_addr = inet_addr("192.168.1.50");
+  memset(my_addr.sin_zero, '\0', sizeof my_addr.sin_zero);
+
+  bind(sockfd, (struct sockaddr *)&my_addr, sizeof(my_addr));
 }
 
 int UDPSocket::sendMessage(const string &msg) {
@@ -61,6 +72,7 @@ int UDPSocket::sendMessage(const string &msg) {
     perror("Sometthing went wrong\n");
     perror(strerror(errno));
   }
+
   return errno;
 }
 
