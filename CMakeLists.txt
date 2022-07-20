@@ -3,10 +3,9 @@ project(test)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(.)
+add_subdirectory(LowLevelController)
 
 add_executable(test
         gate_node.cpp
-        LampController.hpp
-        ManipulatorController.hpp
-        UDPSocket.hpp)
+        )
+        target_link_libraries(test lowlevelcontrollerlib)

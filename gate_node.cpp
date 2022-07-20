@@ -17,8 +17,7 @@
 //     return 0;
 // }
 
-#include "LampController.hpp"
-#include "ManipulatorController.hpp"
+#include "LowLevelController/include/LowLevelController.h"
 
 using namespace std;
 
