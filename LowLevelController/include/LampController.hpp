@@ -19,11 +19,11 @@ public:
   LampController(LampController &&) = delete;
   
   LampController(const string &ip, const int port);
-  bool SetRed(const bool state);
-  bool SetGreen(const bool state);
-  bool SetBlue(const bool state);
-  bool SetOrange(const bool state);
-  bool Set(const bool redState, const bool blueState, const bool greenState,
+  bool setRed(const bool state);
+  bool setGreen(const bool state);
+  bool setBlue(const bool state);
+  bool setOrange(const bool state);
+  bool set(const bool redState, const bool blueState, const bool greenState,
            const bool orangeState);
 
 private:
@@ -45,7 +45,7 @@ string LampController::createMsg(const bool redState, const bool blueState,
   return msg;
 }
 
-bool LampController::SetRed(const bool state) {
+bool LampController::setRed(const bool state) {
   string msg = createMsg(state, blueCurrState, greenCurrState, orangeCurrState);
   if (sendMessage(msg)) {
     perror("Lamp setRed error while sending\n");
@@ -56,7 +56,7 @@ bool LampController::SetRed(const bool state) {
   return true;
 }
 
-bool LampController::SetGreen(const bool state) {
+bool LampController::setGreen(const bool state) {
   string msg = createMsg(redCurrState, blueCurrState, state, orangeCurrState);
   if (sendMessage(msg)) {
     perror("Lamp setGreen error while sending\n");
@@ -67,7 +67,7 @@ bool LampController::SetGreen(const bool state) {
   return true;
 }
 
-bool LampController::SetBlue(const bool state) {
+bool LampController::setBlue(const bool state) {
 
   string msg = createMsg(redCurrState, state, greenCurrState, orangeCurrState);
   if (sendMessage(msg)) {
@@ -79,7 +79,7 @@ bool LampController::SetBlue(const bool state) {
   return true;
 }
 
-bool LampController::SetOrange(const bool state) {
+bool LampController::setOrange(const bool state) {
 
   string msg = createMsg(redCurrState, blueCurrState, greenCurrState, state);
   if (sendMessage(msg)) {
@@ -91,7 +91,7 @@ bool LampController::SetOrange(const bool state) {
   return true;
 }
 
-bool LampController::Set(const bool redState, const bool blueState,
+bool LampController::set(const bool redState, const bool blueState,
                          const bool greenState, const bool orangeState) {
 
   string msg = createMsg(redState, blueState, greenState, orangeState);

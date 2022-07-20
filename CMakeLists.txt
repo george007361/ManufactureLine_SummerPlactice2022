@@ -8,4 +8,4 @@ add_subdirectory(LowLevelController)
 add_executable(test
         gate_node.cpp
         )
-        target_link_libraries(test lowlevelcontrollerlib)
+target_link_libraries(test lowlevelcontrollerlib)
