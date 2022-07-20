@@ -1,39 +1,7 @@
-#pragma once
-
-#include <arpa/inet.h>
-#include <errno.h>
-#include <iostream>
-#include <netdb.h>
-#include <string.h>
-#include <string>
-#include <sys/socket.h>
-#include <unistd.h>
-
-using namespace std;
-
-int gport = 8888;
-
-class UDPSocket {
-private:
-  struct sockaddr_in addr;
-  int sockfd;
-  static const int DEF_PORT = 8888;
-  static const string DEF_ADDR;
-
-public:
-  UDPSocket() = delete;
-  UDPSocket(const UDPSocket &) = delete;
-  UDPSocket(UDPSocket &&) = delete;
-
-  UDPSocket(const string &ip, const int port);
-  ~UDPSocket() { close(sockfd); }
-  int sendMessage(const string &msg);
-
-private:
-  bool validateIpAddress(const string &ipAddress);
-};
+#include "UDPSocket.h"
 
 const string UDPSocket::DEF_ADDR = "192.168.1.10";
+int gport = 8888;
 
 UDPSocket::UDPSocket(const string &ip, const int port) : addr(), sockfd(0) {
   int _port = port; //!!

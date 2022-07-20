@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.20)
 
-include_directories(include src)
+include_directories(include)
 
-add_library(lowlevelcontrollerlib INTERFACE include/LampController.hpp include/LowLevelController.h include/PalletizerController.hpp include/AngleManipulatorController.hpp include/UDPSocket.hpp)
+set(HEADERS "include/LampController.h" "include/LowLevelController.h" "include/PalletizerController.h" "include/AngleManipulatorController.h" "include/UDPSocket.h")
+set(SOURCES "src/LampController.cpp" "src/PalletizerController.cpp" "src/AngleManipulatorController.cpp" "src/UDPSocket.cpp")
+
+set(FILES ${HEADERS} ${SOURCES})
+
+add_library(lowlevelcontrollerlib STATIC ${FILES})

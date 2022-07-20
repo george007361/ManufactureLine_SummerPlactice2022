@@ -1,5 +1,8 @@
-#pragma once
+#ifndef LLC_H
+#define LLC_H
 
-#include "AngleManipulatorController.hpp"
-#include "LampController.hpp"
-#include "PalletizerController.hpp"
+#include "AngleManipulatorController.h"
+#include "LampController.h"
+#include "PalletizerController.h"
+
+#endif

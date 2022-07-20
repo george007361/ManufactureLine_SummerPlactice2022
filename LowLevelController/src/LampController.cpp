@@ -1,36 +1,4 @@
-#pragma once
-
-#include <string>
-
-#include "UDPSocket.hpp"
-
-using namespace std;
-
-class LampController : public UDPSocket {
-private:
-  bool redCurrState;
-  bool blueCurrState;
-  bool greenCurrState;
-  bool orangeCurrState;
-
-public:
-  LampController() = delete;
-  LampController(const LampController &) = delete;
-  LampController(LampController &&) = delete;
-
-  LampController(const string &ip, const int port);
-  bool setRed(const bool state);
-  bool setGreen(const bool state);
-  bool setBlue(const bool state);
-  bool setOrange(const bool state);
-  bool set(const bool redState, const bool blueState, const bool greenState,
-           const bool orangeState);
-  bool init() { return sendMessage("r"); }
-
-private:
-  string createMsg(const bool redState, const bool blueState,
-                   const bool greenState, const bool orangeState);
-};
+#include "LampController.h"
 
 LampController::LampController(const string &ip, const int port)
     : UDPSocket(ip, port), redCurrState(0), blueCurrState(0), greenCurrState(0),
