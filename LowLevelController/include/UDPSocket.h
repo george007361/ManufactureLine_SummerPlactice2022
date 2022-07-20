@@ -20,13 +20,16 @@ private:
   static const string DEF_ADDR;
 
 public:
+  UDPSocket(const string &ip, const int port);
+  ~UDPSocket() { close(sockfd); }
+
+  int sendMessage(const string &msg);
+
   UDPSocket() = delete;
   UDPSocket(const UDPSocket &) = delete;
   UDPSocket(UDPSocket &&) = delete;
-
-  UDPSocket(const string &ip, const int port);
-  ~UDPSocket() { close(sockfd); }
-  int sendMessage(const string &msg);
+  UDPSocket &operator=(const UDPSocket &) = delete;
+  UDPSocket &operator=(UDPSocket &&) = delete;
 
 private:
   bool validateIpAddress(const string &ipAddress);

@@ -40,11 +40,9 @@ private:
   Zone zone;
 
 public:
-  PalletizerController() = delete;
-  PalletizerController(const PalletizerController &) = delete;
-  PalletizerController(PalletizerController &&) = delete;
-
   PalletizerController(const string &ip, const int port);
+  bool init() { return sendMessage("r"); }
+  
   bool moveTo(const int X, const int Y, const int Z);
   bool moveTo(const Position &pos);
   bool setActive(const bool state);
@@ -52,7 +50,12 @@ public:
   void setZone(const Position &min, const Position &max) {
     zone = Zone(min, max);
   }
-  bool init() { return sendMessage("r"); }
+
+  PalletizerController() = delete;
+  PalletizerController(const PalletizerController &) = delete;
+  PalletizerController(PalletizerController &&) = delete;
+  PalletizerController &operator=(const PalletizerController &) = delete;
+  PalletizerController &operator=(PalletizerController &&) = delete;
 
 private:
   string createMsg(const Position &pos, const int state);

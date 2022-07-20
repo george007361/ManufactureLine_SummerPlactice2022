@@ -24,6 +24,7 @@ public:
       return X < rhs.X && Y < rhs.Y && Z < rhs.Z && A < rhs.A;
     }
   };
+  
   struct Zone {
     Position min;
     Position max;
@@ -42,11 +43,9 @@ private:
   Zone zone;
 
 public:
-  AngleManipulatorController() = delete;
-  AngleManipulatorController(const AngleManipulatorController &) = delete;
-  AngleManipulatorController(AngleManipulatorController &&) = delete;
-
   AngleManipulatorController(const string &ip, const int port);
+  bool init() { return sendMessage("r"); }
+
   bool moveTo(const int X, const int Y, const int Z, const int angle);
   bool moveTo(const Position &pos);
   bool setActive(const bool state);
@@ -55,7 +54,12 @@ public:
   void setZone(const Position &min, const Position &max) {
     zone = Zone(min, max);
   }
-  bool init() { return sendMessage("r"); }
+
+  AngleManipulatorController() = delete;
+  AngleManipulatorController(const AngleManipulatorController &) = delete;
+  AngleManipulatorController(AngleManipulatorController &&) = delete;
+  AngleManipulatorController &operator=(const AngleManipulatorController &) = delete;
+  AngleManipulatorController &operator=(AngleManipulatorController &&) = delete;
 
 private:
   string createMsg(const Position &pos, const int state);
