@@ -41,7 +41,7 @@ private:
 
 public:
   PalletizerController(const string &ip, const int port);
-  bool init() { return sendMessage("r"); }
+  bool init() { return sendMessage("r") == 0; }
   
   bool moveTo(const int X, const int Y, const int Z);
   bool moveTo(const Position &pos);

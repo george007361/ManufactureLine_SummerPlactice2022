@@ -16,7 +16,7 @@ private:
 
 public:
   LampController(const string &ip, const int port);
-  bool init() { return sendMessage("r"); }
+  bool init() { return sendMessage("r") == 0; }
 
   bool setRed(const bool state);
   bool setGreen(const bool state);
