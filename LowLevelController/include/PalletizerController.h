@@ -36,7 +36,7 @@ public:
 
 private:
   Position prevPos;
-  int prevState;
+  int pompPrevState;
   Zone zone;
 
 public:
@@ -45,8 +45,8 @@ public:
   
   bool moveTo(const int X, const int Y, const int Z);
   bool moveTo(const Position &pos);
-  bool setActive(const bool state);
-  bool changeState(const int X, const int Y, const int Z, const bool state);
+  bool changePompState(const bool state);
+  bool moveToAndChangePompState(const int X, const int Y, const int Z, const bool state);
   void setZone(const Position &min, const Position &max) {
     zone = Zone(min, max);
   }

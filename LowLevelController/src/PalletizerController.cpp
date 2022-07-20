@@ -1,7 +1,7 @@
 #include "PalletizerController.h"
 
 PalletizerController::PalletizerController(const string &ip, const int port)
-    : UDPSocket(ip, port), prevPos(), prevState(0) {}
+    : UDPSocket(ip, port), prevPos(), pompPrevState(0) {}
 
 string PalletizerController::createMsg(const Position &pos, const int state) {
 
@@ -22,7 +22,7 @@ bool PalletizerController::moveTo(const Position &pos) {
     return false;
   }
 
-  string msg = createMsg(pos, prevState);
+  string msg = createMsg(pos, pompPrevState);
   if (sendMessage(msg)) {
     fprintf(stderr, "%s", "Palletizer moveTo error while sending\n");
     return false;
@@ -37,18 +37,18 @@ bool PalletizerController::moveTo(const int X, const int Y, const int Z) {
   return moveTo(pos);
 }
 
-bool PalletizerController::setActive(const bool state) {
+bool PalletizerController::changePompState(const bool state) {
   string msg = createMsg(prevPos, state);
   if (sendMessage(msg)) {
-    fprintf(stderr, "%s", "Palletizer setActive error while sending\n");
+    fprintf(stderr, "%s", "Palletizer changePompState error while sending\n");
     return false;
   }
-  prevState = state;
+  pompPrevState = state;
 
   return true;
 }
 
-bool PalletizerController::changeState(const int X, const int Y, const int Z,
+bool PalletizerController::moveToAndChangePompState(const int X, const int Y, const int Z,
                                        const bool state) {
   if (!zone.setted()) {
     fprintf(stderr, "%s", "Set zone at first!\n");
@@ -70,7 +70,7 @@ bool PalletizerController::changeState(const int X, const int Y, const int Z,
     return false;
   }
   prevPos = newPos;
-  prevState = state;
+  pompPrevState = state;
 
   return true;
 }

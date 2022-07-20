@@ -2,7 +2,7 @@
 
 AngleManipulatorController::AngleManipulatorController(const string &ip,
                                                        const int port)
-    : UDPSocket(ip, port), prevPos(), prevState(0) {}
+    : UDPSocket(ip, port), prevPos(), pompPrevState(0) {}
 
 string AngleManipulatorController::createMsg(const Position &pos,
                                              const int state) {
@@ -32,7 +32,7 @@ bool AngleManipulatorController::moveTo(const Position &newPos) {
     return false;
   }
 
-  string msg = createMsg(newPos, prevState);
+  string msg = createMsg(newPos, pompPrevState);
   if (sendMessage(msg)) {
     fprintf(stderr, "%s", "Angle Manipulator  moveTo error while sending\n");
     return false;
@@ -42,18 +42,18 @@ bool AngleManipulatorController::moveTo(const Position &newPos) {
   return true;
 }
 
-bool AngleManipulatorController::setActive(const bool state) {
+bool AngleManipulatorController::changePompState(const bool state) {
   string msg = createMsg(prevPos, state);
   if (sendMessage(msg)) {
-    fprintf(stderr, "%s", "Angle Manipulator  setActive error while sending\n");
+    fprintf(stderr, "%s", "Angle Manipulator  changePompState error while sending\n");
     return false;
   }
-  prevState = state;
+  pompPrevState = state;
 
   return true;
 }
 
-bool AngleManipulatorController::changeState(const int X, const int Y,
+bool AngleManipulatorController::moveToAndChangePompState(const int X, const int Y,
                                              const int Z, const int angle,
                                              const bool state) {
   if (!zone.setted()) {
@@ -76,7 +76,7 @@ bool AngleManipulatorController::changeState(const int X, const int Y,
     return false;
   }
   prevPos = newPos;
-  prevState = state;
+  pompPrevState = state;
 
   return true;
 }
