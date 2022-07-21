@@ -8,3 +8,4 @@ set(SOURCES "src/LampController.cpp" "src/PalletizerController.cpp" "src/AngleMa
 set(FILES ${HEADERS} ${SOURCES})
 
 add_library(lowlevelcontrollerlib STATIC ${FILES})
+target_include_directories(lowlevelcontrollerlib PUBLIC ./include)

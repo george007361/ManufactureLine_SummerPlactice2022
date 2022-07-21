@@ -60,8 +60,8 @@ bool LampController::setOrange(const bool state) {
   return true;
 }
 
-bool LampController::set(const bool redState, const bool blueState,
-                         const bool greenState, const bool orangeState) {
+bool LampController::set(const bool redState, const bool orangeState,
+                         const bool greenState, const bool blueState) {
 
   string msg = createMsg(redState, blueState, greenState, orangeState);
 
