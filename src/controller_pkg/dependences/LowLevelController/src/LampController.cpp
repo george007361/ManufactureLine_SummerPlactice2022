@@ -64,7 +64,6 @@ bool LampController::set(const bool redState, const bool orangeState,
                          const bool greenState, const bool blueState) {
 
   string msg = createMsg(redState, blueState, greenState, orangeState);
-
   if (sendMessage(msg)) {
     perror("Lamp Set error while sending\n");
     return false;

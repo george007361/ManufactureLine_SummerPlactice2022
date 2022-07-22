@@ -17,11 +17,11 @@ public:
     Position() : X(0), Y(0), Z(0), A(0) {}
     Position(const int X, const int Y, const int Z, const int A)
         : X(X), Y(Y), Z(Z), A(A) {}
-    bool operator>(Position const &rhs) const {
-      return X > rhs.X && Y > rhs.Y && Z > rhs.Z && A > rhs.A;
+    bool operator>=(Position const &rhs) const {
+      return X >= rhs.X && Y >= rhs.Y && Z >= rhs.Z && A >= rhs.A;
     }
-    bool operator<(Position const &rhs) const {
-      return X < rhs.X && Y < rhs.Y && Z < rhs.Z && A < rhs.A;
+    bool operator<=(Position const &rhs) const {
+      return X <= rhs.X && Y <= rhs.Y && Z <= rhs.Z && A <= rhs.A;
     }
   };
   
@@ -33,7 +33,7 @@ public:
     Zone() : min(), max(), minSetted(false), maxSetted(false) {}
     Zone(const Position &min, const Position &max)
         : min(min), max(max), minSetted(true), maxSetted(true) {}
-    bool check(const Position &pos) { return pos > min && pos < max; }
+    bool check(const Position &pos) { return pos >= min && pos <= max; }
     bool setted() { return minSetted && maxSetted; }
   };
 

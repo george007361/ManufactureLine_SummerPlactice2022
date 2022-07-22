@@ -16,8 +16,8 @@ const int port = 8888;
 const string lamp_ip = "192.168.1.33";
 const string lampPalletizer_ip = "192.168.1.31";
 const string lampAngleManipulator_ip = "192.168.1.32";
-const string palletizer_ip = "192.168.1.33";
-const string angleManipulator_ip = "192.168.1.33";
+const string palletizer_ip = "192.168.1.21";
+const string angleManipulator_ip = "192.168.1.22";
 
 class Controller : public rclcpp::Node {
 public:
@@ -48,17 +48,26 @@ public:
             angleManipulator_ip, port))
 
   {
-    initCOntrollers();
+    RCLCPP_INFO(this->get_logger(), "Conntoller ctor");
+    initControllers();
   }
 
 private:
-  void initCOntrollers() {
-    lampAngleManipulatorController.get()->init();
-    lampPalletizerController.get()->init();
-    lampController.get()->init();
+  void initControllers() {
+    RCLCPP_INFO(this->get_logger(), "Conntoller init: %d%d%d%d%d",
+                lampAngleManipulatorController.get()->init(),
+                lampPalletizerController.get()->init(),
+                lampController.get()->init(),
 
-    palletizerController.get()->init();
-    angleManipulatorController.get()->init();
+                palletizerController.get()->init(),
+                angleManipulatorController.get()->init());
+
+    palletizerController.get()->setZone(
+        PalletizerController::Position(0, -300, 160),
+        PalletizerController::Position(300, 300, 290));
+    angleManipulatorController.get()->setZone(
+        AngleManipulatorController::Position(0, -300, 0, 0),
+        AngleManipulatorController::Position(300, 300, 150, 90));
   }
 
   void lampCallback(const LampMsg::SharedPtr msg) const {
@@ -85,8 +94,9 @@ private:
   }
 
   void palletizerCallback(const PalletizerMsg::SharedPtr msg) const {
-    RCLCPP_INFO(this->get_logger(), "palletizerCallback: get msg XYZS %d%d%d%d",
-                msg->x, msg->y, msg->z, msg->pomp);
+    RCLCPP_INFO(this->get_logger(),
+                "palletizerCallback: get msg X:Y:Z:S %d %d %d %d", msg->x,
+                msg->y, msg->z, msg->pomp);
     palletizerController.get()->changeState((int)msg->x, (int)msg->y,
                                             (int)msg->z, (bool)msg->pomp);
   }
