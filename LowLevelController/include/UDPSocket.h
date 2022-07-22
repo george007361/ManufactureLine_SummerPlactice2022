@@ -18,12 +18,14 @@ private:
   int sockfd;
   static const int DEF_PORT = 8888;
   static const string DEF_ADDR;
+  static string my_ip;
 
 public:
   UDPSocket(const string &ip, const int port);
   ~UDPSocket() { close(sockfd); }
 
-  int sendMessage(const string &msg);
+  bool sendMessage(const string &msg);
+  bool setMyIp(const string &ip);
 
   UDPSocket() = delete;
   UDPSocket(const UDPSocket &) = delete;

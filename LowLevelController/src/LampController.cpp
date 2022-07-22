@@ -17,7 +17,7 @@ string LampController::createMsg(const bool redState, const bool blueState,
 bool LampController::setRed(const bool state) {
   string msg = createMsg(state, blueCurrState, greenCurrState, orangeCurrState);
   if (sendMessage(msg)) {
-    perror("Lamp setRed error while sending\n");
+    cout << "Lamp setRed error while sending\n" << endl;
     return false;
   }
   redCurrState = state;
@@ -28,7 +28,7 @@ bool LampController::setRed(const bool state) {
 bool LampController::setGreen(const bool state) {
   string msg = createMsg(redCurrState, blueCurrState, state, orangeCurrState);
   if (sendMessage(msg)) {
-    perror("Lamp setGreen error while sending\n");
+    cout << "Lamp setGreen error while sending\n" << endl;
     return false;
   }
   greenCurrState = state;
@@ -40,7 +40,7 @@ bool LampController::setBlue(const bool state) {
 
   string msg = createMsg(redCurrState, state, greenCurrState, orangeCurrState);
   if (sendMessage(msg)) {
-    perror("Lamp setBlue error while sending\n");
+    cout << "Lamp setBlue error while sending\n" << endl;
     return false;
   }
   blueCurrState = state;
@@ -52,7 +52,7 @@ bool LampController::setOrange(const bool state) {
 
   string msg = createMsg(redCurrState, blueCurrState, greenCurrState, state);
   if (sendMessage(msg)) {
-    perror("Lamp setOrange error while sending\n");
+    cout << "Lamp setOrange error while sending\n" << endl;
     return false;
   }
   orangeCurrState = state;
@@ -60,13 +60,12 @@ bool LampController::setOrange(const bool state) {
   return true;
 }
 
-bool LampController::set(const bool redState, const bool blueState,
-                         const bool greenState, const bool orangeState) {
+bool LampController::set(const bool redState, const bool orangeState,
+                         const bool greenState, const bool blueState) {
 
   string msg = createMsg(redState, blueState, greenState, orangeState);
-
   if (sendMessage(msg)) {
-    perror("Lamp Set error while sending\n");
+    cout << "Lamp Set error while sending\n" << endl;
     return false;
   }
   redCurrState = redState;

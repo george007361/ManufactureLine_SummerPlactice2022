@@ -22,8 +22,8 @@ public:
   bool setGreen(const bool state);
   bool setBlue(const bool state);
   bool setOrange(const bool state);
-  bool set(const bool redState, const bool blueState, const bool greenState,
-           const bool orangeState);
+  bool set(const bool redState, const bool orangeState, const bool greenState,
+           const bool blueState);
 
   LampController() = delete;
   LampController(const LampController &) = delete;
