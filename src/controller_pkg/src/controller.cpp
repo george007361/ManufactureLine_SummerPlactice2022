@@ -9,15 +9,18 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
-using namespace controller_interface_pkg::msg;
-using std::placeholders::_1;
-
+//---------------------------------------
 const int port = 8888;
+const string my_ip = "192.168.1.50";
 const string lamp_ip = "192.168.1.33";
 const string lampPalletizer_ip = "192.168.1.31";
 const string lampAngleManipulator_ip = "192.168.1.32";
 const string palletizer_ip = "192.168.1.21";
 const string angleManipulator_ip = "192.168.1.22";
+//---------------------------------------
+
+using namespace controller_interface_pkg::msg;
+using std::placeholders::_1;
 
 class Controller : public rclcpp::Node {
 public:
@@ -50,6 +53,8 @@ public:
   {
     RCLCPP_INFO(this->get_logger(), "Conntoller ctor");
     initControllers();
+    setAngleManipulatorZone();
+    setPalletizerZone();
   }
 
 private:
@@ -61,15 +66,22 @@ private:
 
                 palletizerController.get()->init(),
                 angleManipulatorController.get()->init());
+  }
+
+  void setPalletizerZone() {
 
     palletizerController.get()->setZone(
         PalletizerController::Position(0, -300, 160),
         PalletizerController::Position(300, 300, 290));
+  }
+
+  void setAngleManipulatorZone() {
     angleManipulatorController.get()->setZone(
         AngleManipulatorController::Position(0, -300, 0, 0),
         AngleManipulatorController::Position(300, 300, 150, 90));
   }
 
+private:
   void lampCallback(const LampMsg::SharedPtr msg) const {
     RCLCPP_INFO(this->get_logger(), "lampCallback: get msg ROGB %d%d%d%d",
                 msg->red, msg->orange, msg->green, msg->blue);
@@ -93,6 +105,7 @@ private:
         (bool)msg->red, (bool)msg->orange, (bool)msg->green, (bool)msg->blue);
   }
 
+private:
   void palletizerCallback(const PalletizerMsg::SharedPtr msg) const {
     RCLCPP_INFO(this->get_logger(),
                 "palletizerCallback: get msg X:Y:Z:S %d %d %d %d", msg->x,
@@ -104,8 +117,8 @@ private:
   void
   angleManipulatorCallback(const AngleManipulatorMsg::SharedPtr msg) const {
     RCLCPP_INFO(this->get_logger(),
-                "angleManipulatorCallback: get msg XYZAS %d%d%d%d%d", msg->x,
-                msg->y, msg->z, msg->angle, msg->pomp);
+                "angleManipulatorCallback: get msg X Y Z A S %d %d %d %d %d",
+                msg->x, msg->y, msg->z, msg->angle, msg->pomp);
     angleManipulatorController.get()->changeState((int)msg->x, (int)msg->y,
                                                   (int)msg->z, (int)msg->angle,
                                                   (bool)msg->pomp);
@@ -127,8 +140,11 @@ private:
 };
 
 int main(int argc, char *argv[]) {
+  UDPSocket::setMyIp(my_ip);
+
   rclcpp::init(argc, argv);
   rclcpp::spin(std::make_shared<Controller>());
   rclcpp::shutdown();
+
   return 0;
 }

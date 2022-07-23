@@ -24,6 +24,7 @@ add_subdirectory(dependences)
 
 # -----------Test talker-----------
 add_executable(test_talker src/test_talker.cpp)
+target_link_libraries(test_talker lowlevelcontrollerlib)
 ament_target_dependencies(test_talker rclcpp std_msgs controller_interface_pkg)
 
 # -----------Controller-----------

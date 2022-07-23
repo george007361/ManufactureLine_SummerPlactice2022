@@ -33,7 +33,7 @@ bool AngleManipulatorController::moveTo(const Position &newPos) {
   }
 
   string msg = createMsg(newPos, prevState);
-  if (sendMessage(msg)) {
+  if (!sendMessage(msg)) {
     fprintf(stderr, "%s", "Angle Manipulator  moveTo error while sending\n");
     return false;
   }
@@ -44,7 +44,7 @@ bool AngleManipulatorController::moveTo(const Position &newPos) {
 
 bool AngleManipulatorController::setActive(const bool state) {
   string msg = createMsg(prevPos, state);
-  if (sendMessage(msg)) {
+  if (!sendMessage(msg)) {
     fprintf(stderr, "%s", "Angle Manipulator  setActive error while sending\n");
     return false;
   }
@@ -71,7 +71,7 @@ bool AngleManipulatorController::changeState(const int X, const int Y,
   string msg = createMsg(newPos, state);
 
   cout << msg << endl;
-  if (sendMessage(msg)) {
+  if (!sendMessage(msg)) {
     fprintf(stderr, "%s", "Angle Manipulator  set error while sending\n");
     return false;
   }

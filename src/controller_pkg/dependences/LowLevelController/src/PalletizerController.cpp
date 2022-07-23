@@ -23,7 +23,7 @@ bool PalletizerController::moveTo(const Position &pos) {
   }
 
   string msg = createMsg(pos, prevState);
-  if (sendMessage(msg)) {
+  if (!sendMessage(msg)) {
     fprintf(stderr, "%s", "Palletizer moveTo error while sending\n");
     return false;
   }
@@ -39,7 +39,7 @@ bool PalletizerController::moveTo(const int X, const int Y, const int Z) {
 
 bool PalletizerController::setActive(const bool state) {
   string msg = createMsg(prevPos, state);
-  if (sendMessage(msg)) {
+  if (!sendMessage(msg)) {
     fprintf(stderr, "%s", "Palletizer setActive error while sending\n");
     return false;
   }
@@ -65,7 +65,7 @@ bool PalletizerController::changeState(const int X, const int Y, const int Z,
   string msg = createMsg(newPos, state);
 
   cout << msg << endl;
-  if (sendMessage(msg)) {
+  if (!sendMessage(msg)) {
     fprintf(stderr, "%s", "Palletizer set error while sending\n");
     return false;
   }

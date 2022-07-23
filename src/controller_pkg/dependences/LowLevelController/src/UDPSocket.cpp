@@ -1,6 +1,7 @@
 #include "UDPSocket.h"
 
-const string UDPSocket::DEF_ADDR = "192.168.1.10";
+const string UDPSocket::DEF_ADDR = "127.0.0.1";
+string UDPSocket::my_ip = "192.168.1.50";
 int gport = 8888;
 
 UDPSocket::UDPSocket(const string &ip, const int port) : addr(), sockfd(0) {
@@ -27,7 +28,7 @@ UDPSocket::UDPSocket(const string &ip, const int port) : addr(), sockfd(0) {
   struct sockaddr_in my_addr;
   my_addr.sin_family = AF_INET;
   my_addr.sin_port = htons(++gport); // short, network byte order
-  my_addr.sin_addr.s_addr = inet_addr("192.168.1.50");
+  my_addr.sin_addr.s_addr = inet_addr(my_ip.c_str());
   memset(my_addr.sin_zero, '\0', sizeof(my_addr.sin_zero));
 
   cout << "--> UDPSocket ctor: " << inet_ntoa(addr.sin_addr) << " "
@@ -38,19 +39,27 @@ UDPSocket::UDPSocket(const string &ip, const int port) : addr(), sockfd(0) {
   bind(sockfd, (struct sockaddr *)&my_addr, sizeof(my_addr));
 }
 
-int UDPSocket::sendMessage(const string &msg) {
+bool UDPSocket::sendMessage(const string &msg) {
   cout << "--> " << msg << endl;
   int err = sendto(sockfd, msg.c_str(), msg.length() + 1, 0,
                    (struct sockaddr *)&addr, sizeof(addr));
   if (err <= 0) {
-    perror("Sometthing went wrong\n");
+    cout << "Sometthing went wrong:\n" << endl;
     cout << "--> " << inet_ntoa(addr.sin_addr) << endl;
     cout << "--> " << msg << endl;
-
     perror(strerror(errno));
+    return false;
   }
 
-  return false; // errno;
+  return true;
+}
+
+bool UDPSocket::setMyIp(const string &ip) {
+  if (!validateIpAddress(ip))
+    return false;
+
+  my_ip = ip;
+  return true;
 }
 
 bool UDPSocket::validateIpAddress(const string &ipAddress) {
