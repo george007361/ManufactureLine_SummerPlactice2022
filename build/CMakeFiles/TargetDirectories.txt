@@ -1,6 +1,0 @@
-/home/gg/Desktop/SM/LLCchange/build/CMakeFiles/rebuild_cache.dir
-/home/gg/Desktop/SM/LLCchange/build/CMakeFiles/edit_cache.dir
-/home/gg/Desktop/SM/LLCchange/build/CMakeFiles/test.dir
-/home/gg/Desktop/SM/LLCchange/build/LowLevelController/CMakeFiles/rebuild_cache.dir
-/home/gg/Desktop/SM/LLCchange/build/LowLevelController/CMakeFiles/edit_cache.dir
-/home/gg/Desktop/SM/LLCchange/build/LowLevelController/CMakeFiles/lowlevelcontrollerlib.dir

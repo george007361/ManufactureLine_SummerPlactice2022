@@ -1,2 +1,0 @@
-/usr/bin/ar qc liblowlevelcontrollerlib.a CMakeFiles/lowlevelcontrollerlib.dir/src/LampController.cpp.o CMakeFiles/lowlevelcontrollerlib.dir/src/PalletizerController.cpp.o CMakeFiles/lowlevelcontrollerlib.dir/src/AngleManipulatorController.cpp.o CMakeFiles/lowlevelcontrollerlib.dir/src/UDPSocket.cpp.o
-/usr/bin/ranlib liblowlevelcontrollerlib.a

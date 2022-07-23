@@ -1,11 +1,10 @@
-cmake_minimum_required(VERSION 3.16)
-project(test)
+cmake_minimum_required(VERSION 3.5)
 
-set(CMAKE_CXX_STANDARD 14)
+project(ManualControlProgram LANGUAGES CXX C)
 
-add_subdirectory(LowLevelController)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD_REQUIRED ON)
 
-add_executable(test
-        gate_node.cpp
-        )
-target_link_libraries(test lowlevelcontrollerlib)
+add_executable(ManualControlProgram ManualControlProgram.cpp)
